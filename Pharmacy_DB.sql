@@ -70,4 +70,40 @@ Insert into Pharmacy_DB.Doctor values
 (124, "Veda", "Pulmonology", 9836351788),
 (125, "Vedya", "Gynecology", 8765688654),
 (126, "Sam", "General Physician", 67895645);
+
 select * from Pharmacy_DB.Doctor;
+
+-- Prescription table
+create table Pharmacy_DB.Prescription(
+PrescriptionID INT primary key,
+PatientID Int,
+DoctorID int,
+PrescribedDate Date,
+Notes text,
+Foreign key (PatientID) references Patients(PatientID),
+Foreign Key (DoctorID) references Doctor(DoctorID)
+);
+Insert into Pharmacy_DB.Prescription values 
+(201, 1001, 123, '2025-04-12', "allergic rhinitia"),
+(202,1002, 124, '2025-05-05', "Mild fever"),
+(203,1003,125,'2025-05-05', "breathing issue");
+
+select * from Pharmacy_DB.Prescription;
+
+-- prescriprtion details table
+CREATE TABLE PrescriptionDetails (
+    PrescriptionDetailID INT PRIMARY KEY,
+    PrescriptionID INT,
+    MedicationID INT,
+    QuantityPrescribed INT,
+    DosageInstructions TEXT,
+    FOREIGN KEY (PrescriptionID) REFERENCES Prescription(PrescriptionID),
+    FOREIGN KEY (MedicationID) REFERENCES Medication(MedicationID)
+);
+
+insert into Pharmacy_DB.PrescriptionDetails values 
+(501, 201, 1, 10, "Take one tablet every 6 houurs after meal"),
+(502, 202, 2, 5, "Take one tablet a day after meal"),
+(503, 203, 3, 10, "Take two tablets a day after meal");
+
+select * from Pharmacy_DB.PrescriptionDetails;

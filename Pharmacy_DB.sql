@@ -54,3 +54,20 @@ modify column PatientID int Primary key;
  (1002, "Vasu", "Tatavarthi", '1993-03-01', "Male", 424343667, "Hyderabad"),
  (1003, "Aishwarya", "Tommandru", '1999-08-21', "Female", 231452621, "Vijayawada"),
  (1004, "John", "Doe", '1992-01-01', "Male", 234566899,"Chicago");
+ select * from Pharmacy_DB.Patients;
+-- Doctor's table
+Create Table Pharmacy_DB.Doctor(
+DoctorID INT,
+Name varchar(50),
+Department varchar(100),
+contact INT,
+primary key(DoctorID)
+);
+Alter table Pharmacy_DB.Doctor
+modify column Contact Bigint;
+Insert into Pharmacy_DB.Doctor values
+(123, "Jai Ram", "Cardiology", 1234567),
+(124, "Veda", "Pulmonology", 9836351788),
+(125, "Vedya", "Gynecology", 8765688654),
+(126, "Sam", "General Physician", 67895645);
+select * from Pharmacy_DB.Doctor;

@@ -36,3 +36,21 @@ Insert into Pharmacy_DB.Inventory values(101, 1, 100, '2026-12-31', "Batch001"),
 (106, 6, 40, '2026-06-11', "Batch006");
 select * from Pharmacy_DB.Inventory;
 
+-- Patients table
+Create Table Pharmacy_DB.Patients(
+PatientID int,
+FirstName varchar(70),
+LastName varchar(70),
+DateOfBirth Date,
+Gender varchar(10),
+ContactNum int,
+Address text
+);
+alter table Pharmacy_DB.Patients
+modify column PatientID int Primary key;
+
+ Insert into Pharmacy_DB.Patients values 
+ (1001, "Priya", "Yeddanapudi", '1999-06-11', "Female", 123243544, "Hyderabad"),
+ (1002, "Vasu", "Tatavarthi", '1993-03-01', "Male", 424343667, "Hyderabad"),
+ (1003, "Aishwarya", "Tommandru", '1999-08-21', "Female", 231452621, "Vijayawada"),
+ (1004, "John", "Doe", '1992-01-01', "Male", 234566899,"Chicago");

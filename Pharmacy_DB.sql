@@ -15,8 +15,19 @@ INSERT INTO pharmacy_DB.Medication (MedicationID, Name, Brand, DosageForm, Stren
 (2, 'Amoxicillin', 'Amoxil', 'Capsule', '250mg'),
 (3, 'Cetirizine', 'Zyrtec', 'Tablet', '10mg'),
 (4, 'Ibuprofen', 'Advil', 'Tablet', '200mg'),
-(5, 'Metformin', 'Glucophage', 'Tablet', '500 mg'),
-(6, 'Telmisartan', 'Telma', "Tablet", '40 mg');
+(5, 'Metformin', 'Glucophage', 'Tablet', '500mg'),
+(6, 'Telmisartan', 'Telma', "Tablet", '40mg');
+
+update pharmacy_DB.Medication
+set strength='500mg'
+where MedicationID=5;
+
+update pharmacy_DB.Medication
+set strength='40mg'
+where MedicationID=6;
+
+select * from pharmacy_DB.Medication;
+
 
 -- Inventory Table
 Create Table Pharmacy_DB.Inventory(
@@ -34,6 +45,7 @@ Insert into Pharmacy_DB.Inventory values(101, 1, 100, '2026-12-31', "Batch001"),
 (104, 4, 200, '2025-09-30', "Batch004"),
 (105, 5, 100, '2025-2-28', "Batch005"),
 (106, 6, 40, '2026-06-11', "Batch006");
+
 select * from Pharmacy_DB.Inventory;
 
 -- Patients table
@@ -49,12 +61,17 @@ Address text
 alter table Pharmacy_DB.Patients
 modify column PatientID int Primary key;
 
+alter table Pharmacy_DB.Patients
+modify column ContactNUM Varchar(12);
+
  Insert into Pharmacy_DB.Patients values 
  (1001, "Priya", "Yeddanapudi", '1999-06-11', "Female", 123243544, "Hyderabad"),
  (1002, "Vasu", "Tatavarthi", '1993-03-01', "Male", 424343667, "Hyderabad"),
  (1003, "Aishwarya", "Tommandru", '1999-08-21', "Female", 231452621, "Vijayawada"),
  (1004, "John", "Doe", '1992-01-01', "Male", 234566899,"Chicago");
+ 
  select * from Pharmacy_DB.Patients;
+ 
 -- Doctor's table
 Create Table Pharmacy_DB.Doctor(
 DoctorID INT,
@@ -63,13 +80,46 @@ Department varchar(100),
 contact INT,
 primary key(DoctorID)
 );
+
 Alter table Pharmacy_DB.Doctor
-modify column Contact Bigint;
+modify column Contact varchar(15);
+
+Alter table Pharmacy_DB.Doctor
+add column last_name varchar(20);
+
+Alter table Pharmacy_DB.Doctor
+modify column last_name varchar(20) After name;
+
+alter table Pharmacy_DB.Doctor
+rename column name to First_name;
+alter table Pharmacy_DB.Doctor
+rename column last_name to Last_name;
+
+
 Insert into Pharmacy_DB.Doctor values
 (123, "Jai Ram", "Cardiology", 1234567),
 (124, "Veda", "Pulmonology", 9836351788),
 (125, "Vedya", "Gynecology", 8765688654),
 (126, "Sam", "General Physician", 67895645);
+
+update Pharmacy_DB.Doctor
+set last_name="Tatavarthi" 
+where name="Jai Ram";
+
+update Pharmacy_DB.Doctor
+set last_name="Gannavarpu" 
+where name="Veda";
+
+update Pharmacy_DB.Doctor
+set last_name="Yeddanapudi" 
+where name="Vedya";
+
+update Pharmacy_DB.Doctor
+set last_name="Behara" 
+where name="Sam";
+
+
+Describe Pharmacy_DB.Doctor;
 
 select * from Pharmacy_DB.Doctor;
 
@@ -107,3 +157,26 @@ insert into Pharmacy_DB.PrescriptionDetails values
 (503, 203, 3, 10, "Take two tablets a day after meal");
 
 select * from Pharmacy_DB.PrescriptionDetails;
+
+
+Select  *  From Pharmacy_DB.Inventory ​
+Where ExpiryDate < Current_date;
+
+
+SELECT DoctorID, COUNT(*) AS Total_Prescriptions
+FROM Pharmacy_DB.Prescription
+WHERE PrescribedDate = Current_date()
+GROUP BY DoctorID
+ORDER BY Total_Prescriptions DESC;
+
+select * from Pharmacy_DB.Prescription as p
+Left Join Pharmacy_DB.Patients as pr on
+p.PatientID=pr.PatientID;
+select * from Pharmacy_DB.Prescription;
+select * from Pharmacy_DB.Patients;
+
+SET SQL_SAFE_UPDATES=0;
+describe Pharmacy_DB.Inventory;
+create user 'user1'@'local host' Identified by 'P@ssword';
+drop user 'user1'@'local host';
+set sql_Safe_updates=0;
